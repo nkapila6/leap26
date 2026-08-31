@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Checkpoint files (resumability state, not data)
+.*_checkpoint.json
+.checkpoint*.json
+
+# Snapshots / temp
+.opencode-snapshots/
+*.tmp

@@ -224,4 +224,4 @@ __marimo__/
 # Snapshots / temp
 .opencode-snapshots/
 *.tmp
-charts/
+# charts/ (needed for GitHub Pages site)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Comprehensive data analysis report for LEAP 2026 exhibitors."""
+"""Data analysis report for LEAP 2026 exhibitors."""
 
 import os
 import re

@@ -224,3 +224,4 @@ __marimo__/
 # Snapshots / temp
 .opencode-snapshots/
 *.tmp
+charts/

@@ -95,6 +95,40 @@
       border-radius: 8px;
       display: block;
       background: #0f141a;
+      cursor: zoom-in;
+    }
+    /* Lightbox modal */
+    .lightbox {
+      display: none; position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%; z-index: 9999;
+      background: rgba(0,0,0,0.9);
+      align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox-img {
+      max-width: 90%; max-height: 90%;
+      border-radius: 8px;
+      transform-origin: center center;
+      transition: transform .15s ease;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .lightbox-img.grabbing { cursor: grabbing; }
+    .lightbox-close {
+      position: fixed; top: 16px; right: 20px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 16px;
+      font-size: 1rem; color: var(--text);
+      cursor: pointer; z-index: 10001; font-family: var(--font);
+    }
+    .lightbox-close:hover { background: var(--card-hover); }
+    .lightbox-hint {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      color: var(--muted); font-size: 0.85rem; z-index: 10001;
+      font-family: var(--font); background: var(--card);
+      padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
     }
     .controls {
       display: flex;
@@ -479,6 +513,69 @@
     // Pagination listeners.
     prevBtn.addEventListener("click", () => { currentPage--; renderTable(); });
     nextBtn.addEventListener("click", () => { currentPage++; renderTable(); });
+  </script>
+
+  <!-- Lightbox for chart zoom -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">Close (Esc)</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Chart">
+    <div class="lightbox-hint">Scroll to zoom | Drag to pan | Esc to close</div>
+  </div>
+  <script>
+    (function() {
+      var lb = document.getElementById("lightbox");
+      var lbImg = document.getElementById("lightboxImg");
+      var lbClose = document.getElementById("lightboxClose");
+      var scale = 1, panX = 0, panY = 0, dragging = false, lastX = 0, lastY = 0;
+
+      function open(src) {
+        lbImg.src = src;
+        scale = 1; panX = 0; panY = 0;
+        lbImg.style.transform = "";
+        lb.classList.add("active");
+      }
+      function close() { lb.classList.remove("active"); lbImg.src = ""; }
+      function updateTransform() {
+        lbImg.style.transform = "translate(" + panX + "px," + panY + "px) scale(" + scale + ")";
+      }
+
+      // Open on chart image click
+      document.querySelectorAll(".chart-card img").forEach(function(img) {
+        img.addEventListener("click", function() { open(img.src); });
+      });
+
+      lbClose.addEventListener("click", close);
+      lb.addEventListener("click", function(e) { if (e.target === lb) close(); });
+      document.addEventListener("keydown", function(e) { if (e.key === "Escape") close(); });
+
+      // Zoom on scroll
+      lbImg.addEventListener("wheel", function(e) {
+        e.preventDefault();
+        var delta = e.deltaY > 0 ? -0.15 : 0.15;
+        scale = Math.max(0.5, Math.min(8, scale + delta * scale));
+        updateTransform();
+      }, { passive: false });
+
+      // Drag to pan
+      lbImg.addEventListener("mousedown", function(e) {
+        dragging = true; lastX = e.clientX; lastY = e.clientY;
+        lbImg.classList.add("grabbing");
+      });
+      document.addEventListener("mousemove", function(e) {
+        if (!dragging) return;
+        panX += e.clientX - lastX; panY += e.clientY - lastY;
+        lastX = e.clientX; lastY = e.clientY;
+        updateTransform();
+      });
+      document.addEventListener("mouseup", function() {
+        dragging = false; lbImg.classList.remove("grabbing");
+      });
+
+      // Reset transform on double-click
+      lbImg.addEventListener("dblclick", function() {
+        scale = 1; panX = 0; panY = 0; updateTransform();
+      });
+    })();
   </script>
 </body>
 </html>

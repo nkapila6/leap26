@@ -14,8 +14,12 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock, Semaphore
 
-CSV_PATH = "/Users/nkapila6/onegiantleap_2026_exhibitors.csv"
-CHECKPOINT_PATH = "/Users/nkapila6/.enrichment_checkpoint.json"
+CSV_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "onegiantleap_2026_exhibitors.csv"
+)
+CHECKPOINT_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), ".enrichment_checkpoint.json"
+)
 API_URL_BASE = (
     "https://exhibitly.onegiantleap.com/api/company-search"
     "?event_id=01bc3715-1f0b-46d3-ab4d-389e87a66388&q="

@@ -15,8 +15,12 @@ import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-CSV_PATH = "/Users/nkapila6/leap26/onegiantleap_2026_exhibitors.csv"
-CHECKPOINT_PATH = "/Users/nkapila6/leap26/.ddgs_checkpoint.json"
+CSV_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "onegiantleap_2026_exhibitors.csv"
+)
+CHECKPOINT_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), ".ddgs_checkpoint.json"
+)
 
 FIRECRAWL_URL = "https://api.firecrawl.dev/v2/search"
 SEARCH_LIMIT = 3

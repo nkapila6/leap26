@@ -10,8 +10,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-CSV_PATH = "/Users/nkapila6/leap26/onegiantleap_2026_exhibitors.csv"
-CHARTS_DIR = "/Users/nkapila6/leap26/charts"
+CSV_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "onegiantleap_2026_exhibitors.csv"
+)
+CHARTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts")
 
 MENA_COUNTRIES = {
     "Saudi Arabia",

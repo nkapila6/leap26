@@ -16,8 +16,12 @@ from urllib.request import Request, urlopen
 API_URL = "https://connect.onegiantleap.com/api/graphql"
 EVENT_ID = "RXZlbnRfMjc3NzQ3Mw=="
 VIEW_ID = "RXZlbnRWaWV3XzEyMTczMTE="
-CSV_PATH = "/Users/nkapila6/onegiantleap_2026_exhibitors.csv"
-CHECKPOINT_PATH = "/Users/nkapila6/.swapcard_checkpoint.json"
+CSV_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "onegiantleap_2026_exhibitors.csv"
+)
+CHECKPOINT_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), ".swapcard_checkpoint.json"
+)
 LIST_HASH = "b3cb76208b6de3d96c5ba1a8f02e6be6135d5ff1db0a2eecd64b7d15e7e6b5e2"
 DETAIL_HASH = "fe9f995a579b65a3453f7f576cd37bea71539cf7cf12ed9e59eb2a41706c9630"
 DETAIL_WORKERS = 10

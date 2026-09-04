@@ -13,8 +13,12 @@ import time
 import urllib.parse
 from urllib.parse import urlparse
 
-CSV_PATH = "/Users/nkapila6/onegiantleap_2026_exhibitors.csv"
-CHECKPOINT_PATH = "/Users/nkapila6/.google_website_checkpoint.json"
+CSV_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "onegiantleap_2026_exhibitors.csv"
+)
+CHECKPOINT_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), ".google_website_checkpoint.json"
+)
 SLEEP_AFTER_NAV = 2
 SLEEP_LONG = 4
 RATE_LIMIT_STREAK_THRESHOLD = 5

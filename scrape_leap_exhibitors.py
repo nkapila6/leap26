@@ -4,6 +4,7 @@
 import csv
 import html
 import json
+import os
 import re
 import time
 import urllib.request
@@ -138,7 +139,9 @@ def main():
         page += 1
         time.sleep(0.5)
 
-    csv_path = "/Users/nkapila6/onegiantleap_2026_exhibitors.csv"
+    csv_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "onegiantleap_2026_exhibitors.csv"
+    )
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["Company Name", "Logo URL"])

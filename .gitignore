@@ -225,3 +225,6 @@ __marimo__/
 .opencode-snapshots/
 *.tmp
 # charts/ (needed for GitHub Pages site)
+.llm_enrichment.json
+.todo
+src/
